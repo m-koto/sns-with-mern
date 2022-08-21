@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 
-// ユーザー登録
+// ユーザー登録 userRegistration
 router.post("/register", async (req, res) => {
 //リクエストに含まれるbody要素の格納
 try{
@@ -17,6 +17,22 @@ try{
     return res.status(500).json(err);
   }
 });
+
+// ログイン userLogin
+router.post("/login", async (req, res) => {
+  try{
+      const user = await User.findOne({ email: req.body.email });
+      if (!user) return res.status(400).json("メールアドレスまたはパスワードが間違っています");
+
+      const validPassword = req.body.password === user.password;
+      if (!validPassword) return res.status(400).json("メールアドレスまたはパスワードが間違っています");
+
+      return res.status(200).json(user);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
+
 
 // テスト用callback関数
 // router.get("/", (req, res) => {
