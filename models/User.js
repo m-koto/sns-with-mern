@@ -12,8 +12,8 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      max: 50,
-      unique: ture,
+      max: 256,
+      unique: true,
     },
     password: {
       type: String,
@@ -52,3 +52,5 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+module.exports = mongoose.model("User", UserSchema);
